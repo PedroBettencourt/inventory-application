@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= album.title.chartAt(0).toUpperCase() + album.title.slice(1) %></title>
+    <title><%= album.title %></title>
 </head>
 <body>
-    <h1><%= album.title.chartAt(0).toUpperCase() + album.title.slice(1) %></h1>
-    <h2>Artist: <% album.artist %></h2>
-    <h2>Release: <% album.release %></h2>
-    <h2>Genre: <% album.genre %></h2>
-    <h2>Quantity: <% album.quantity %></h2>
+    <h1><%= album.title %></h1>
+    <h2>Artist: <%= album.artist %></h2>
+    <h2>Release: <%= album.release %></h2>
+    <h2>Genre: <%= album.genre %></h2>
+    <h2>Quantity: <%= album.quantity %></h2>
 </body>
 </html>

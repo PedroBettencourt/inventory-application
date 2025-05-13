@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+<body>
+    <h1><%= title %></h1>
+    <h2>Description: <%= content[0].description %></h2>
+    <% content.map(album => { %>
+        <ul>
+            <li><%= album.title %></li>
+            <li><%= album.release %></li>
+            <li><%= album.genre %></li>
+            <li><a href="/album/<%=album.title %>">Go to Album</a></li>
+        </ul>
+    <% }) %>
+</body>
+</html>
