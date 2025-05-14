@@ -3,8 +3,7 @@ const db = require("../db/queries");
 async function allArtistsGet(req, res) {
     const artists = await db.getAllArtists();
 
-    // ADD LINK TO ARTIST PAGE
-    res.render("artistgrid", {
+    res.render("artistGrid", {
         title: "All Artists",
         content: artists,
     });

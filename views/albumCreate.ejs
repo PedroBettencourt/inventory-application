@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Album</title>
+</head>
+<body>
+    <h1>New Album</h1>
+    <%- include("partials/errors.ejs") %>
+    <form action="/album/new" method="POST">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+        <label for="artist">Artist:</label>
+        <input type="text" id="artist" name="artist" required>
+        <label for="release">Release:</label>
+        <input type="date" id="release" name="release" required>
+        <fieldset>
+            <legend>Genre</legend> 
+            <% genres.forEach(genre => { %>
+                <input type="checkbox" id="<%= genre.name %>" name="<%= genre.name %>">
+                <label for="<%= genre.name %>"><%= genre.name %></label>
+            <% }) %>
+        </fieldset>
+        <label for="quantity">Quantity:</label>
+        <input type="num" id="quantity" name="quantity" required>
+        <button type="submit">Submit</button>
+    </form>
+    <a href="/album">Back to Albums</a>
+</body>
+</html>

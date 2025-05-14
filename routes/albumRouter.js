@@ -3,6 +3,8 @@ const albumRouter = express.Router();
 const albumController = require('../controllers/albumController');
 
 albumRouter.get("/", albumController.allAlbumsGet);
+albumRouter.get("/new", albumController.albumCreateGet);
+albumRouter.post("/new", albumController.albumCreatePost);
 albumRouter.get("/:album", albumController.albumGet);
 
 module.exports = albumRouter;

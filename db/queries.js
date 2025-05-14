@@ -11,6 +11,10 @@ async function getAlbum(title) {
     return rows[0];
 }
 
+async function addAlbum(title, artist, release, genre, quantity) {
+    await pool.query("INSERT INTO album (title, artist, release, genre, quantity) VALUES ($1, $2, $3, $4, $5)", [title, artist, release, genre, quantity]);
+}
+
 
 // ARTISTS
 async function getAllArtists() {
@@ -36,4 +40,4 @@ async function getGenre(genre) {
 }
 
 
-module.exports = { getAllAlbums, getAlbum, getAllArtists, getArtist, getAllGenres, getGenre };
+module.exports = { getAllAlbums, getAlbum, addAlbum, getAllArtists, getArtist, getAllGenres, getGenre };
