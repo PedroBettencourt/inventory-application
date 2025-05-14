@@ -12,7 +12,7 @@
         <% content.map(album => { %>
             <ul>
                 <li>Title: <a href="/album/<%=album.title %>"><%= album.title %></a></li>
-                <li>Release: <%= album.release %></li>
+                <li>Release: <%= album.release.toLocaleDateString() %></li>
                 <li>Genre:
                     <ul>
                         <% album.genre.map(genre => { %>
@@ -23,6 +23,7 @@
             </ul>
         <% }) %>
     <% } %>
+    <a href="/artist/<%= title %>/update">Update Artist</a>
     <a href="/artist">Back to Artists</a>
 </body>
 </html>

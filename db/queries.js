@@ -2,7 +2,7 @@ const pool = require('./pool');
 
 // ALBUMS
 async function getAllAlbums() {
-    const { rows } = await pool.query("SELECT * FROM album");
+    const { rows } = await pool.query("SELECT title, artist, quantity FROM album");
     return rows;
 }
 
@@ -13,6 +13,10 @@ async function getAlbum(title) {
 
 async function addAlbum(title, artist, release, genre, quantity) {
     await pool.query("INSERT INTO album (title, artist, release, genre, quantity) VALUES ($1, $2, $3, $4, $5)", [title, artist, release, genre, quantity]);
+}
+
+async function updateAlbum(title, artist, release, genre, quantity, oldTitle) {
+    await pool.query("UPDATE album SET title=$1, artist=$2, release=$3, genre=$4, quantity=$5 WHERE title=$6", [title, artist, release, genre, quantity, oldTitle]);
 }
 
 
@@ -31,6 +35,10 @@ async function addArtist(name, description) {
     await pool.query("INSERT INTO artist (name, description) VALUES ($1, $2)", [name, description]);
 }
 
+async function updateArtist(name, description, oldName) {
+    await pool.query("UPDATE artist SET name = $1, description = $2 WHERE name = $3", [name, description, oldName]);
+}
+
 
 // GENRES
 async function getAllGenres() {
@@ -47,5 +55,11 @@ async function addGenre(name, description) {
     await pool.query("INSERT INTO genre (name, description) VALUES ($1, $2)", [name, description]);
 }
 
+async function updateGenre(name, description, oldName) {
+    await pool.query("UPDATE genre SET name = $1, description = $2 WHERE name = $3", [name, description, oldName]);
+}
 
-module.exports = { getAllAlbums, getAlbum, addAlbum, getAllArtists, getArtist, addArtist, getAllGenres, getGenre, addGenre };
+
+module.exports = { getAllAlbums, getAlbum, addAlbum, updateAlbum, 
+                getAllArtists, getArtist, addArtist, updateArtist, 
+                getAllGenres, getGenre, addGenre, updateGenre };

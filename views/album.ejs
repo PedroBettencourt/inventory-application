@@ -8,7 +8,7 @@
 <body>
     <h1><%= album.title %></h1>
     <h2>Artist: <a href="/artist/<%= album.artist %>"><%= album.artist %></a></h2>
-    <h2>Release: <%= album.release %></h2>
+    <h2>Release: <%= album.release.toLocaleDateString() %></h2>
     <h2>Genre:</h2>
         <ul>
             <% album.genre.map(genre => { %>
@@ -19,6 +19,7 @@
         </ul>
     </h2>
     <h2>Quantity: <%= album.quantity %></h2>
+    <a href="/album/<%= album.title %>/update">Update Album</a>
     <a href="/album">Back to Albums</a>
 </body>
 </html>

@@ -13,10 +13,11 @@
             <ul>
                 <li>Title: <a href="/album/<%= album.title %>"><%= album.title %></a></li>
                 <li>Artist <a href="/artist/<%= album.artist %>"><%= album.artist %></a></li>
-                <li><%= album.release %></li>
+                <li>Release: <%= album.release.toLocaleDateString() %></li>
             </ul>
         <% }) %>
     <% } %>
+    <a href="/genre/<%= title %>/update">Update Genre</a>
     <a href="/genre">Back to Genres</a>
 </body>
 </html>

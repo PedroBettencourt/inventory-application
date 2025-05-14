@@ -18,7 +18,7 @@ async function genreGet(req, res) {
     if (content.length === 0) return res.redirect("/error");
     
     res.render("genre", { 
-        title: `Albums in ${content[0].name}`, 
+        title: `${content[0].name}`, 
         content: content,
     });
 };
@@ -51,4 +51,25 @@ const genreCreatePost = [
     }
 ];
 
-module.exports = { allGenresGet, genreGet, genreCreateGet, genreCreatePost }
+async function genreUpdateGet(req, res) {
+    const genre = await db.getGenre(req.params.genre);
+    res.render("genreUpdate", { genre: genre[0] });
+};
+
+const genreUpdatePost = [
+    validateGenre,
+    async(req, res) => {
+        // Check for errors
+        let errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).render("artistCreate", { errors: errors.array() });
+        };
+        
+        const { name, description } = req.body;
+        const oldName = req.params.genre;
+        await db.updateGenre(name, description, oldName);
+        res.redirect("/genre");
+    }
+];
+
+module.exports = { allGenresGet, genreGet, genreCreateGet, genreCreatePost, genreUpdateGet, genreUpdatePost };

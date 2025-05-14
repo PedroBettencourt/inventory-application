@@ -1,6 +1,8 @@
 const db = require("../db/queries");
 const { body, validationResult } = require('express-validator');
 
+
+// READ
 async function allArtistsGet(req, res) {
     const artists = await db.getAllArtists();
 
@@ -23,6 +25,8 @@ async function artistGet(req, res) {
     })
 };
 
+
+// CREATE
 function artistCreateGet(req, res) {
     res.render("artistCreate");
 };
@@ -51,4 +55,27 @@ const artistCreatePost = [
     }
 ];
 
-module.exports = { allArtistsGet, artistGet, artistCreateGet, artistCreatePost }
+
+// UPDATE
+async function artistUpdateGet(req, res) {
+    const artist = await db.getArtist(req.params.artist);
+    res.render("artistUpdate", {artist: artist[0]});
+};
+
+const artistUpdatePost = [
+    validateArtist,
+    async(req, res) => {
+        // Check for errors
+        let errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).render("artistCreate", { errors: errors.array() });
+        };
+
+        const { name, description } = req.body;
+        const oldName = req.params.artist;
+        await db.updateArtist(name, description, oldName);
+        res.redirect("/artist");
+    }
+];
+
+module.exports = { allArtistsGet, artistGet, artistCreateGet, artistCreatePost, artistUpdateGet, artistUpdatePost }

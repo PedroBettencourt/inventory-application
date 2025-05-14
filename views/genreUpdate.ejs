@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Genre</title>
+</head>
+<body>
+    <h1>Update Genre</h1>
+    <%- include("partials/errors.ejs") %>
+    <form action="/genre/<%= genre.name %>/update" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="<%= genre.name %>" required>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="5" cols="50" required><%= genre.description %></textarea>
+        <button type="submit">Submit</button>
+    </form>
+    <a href="/genre">Back to Genres</a>
+</body>
+</html>
