@@ -23,8 +23,12 @@ async function getAllArtists() {
 }
 
 async function getArtist(artist) {
-    const { rows } = await pool.query("SELECT * FROM artist ar JOIN album al ON ar.name = al.artist WHERE name ILIKE $1", [artist]);
+    const { rows } = await pool.query("SELECT * FROM artist ar LEFT JOIN album al ON ar.name = al.artist WHERE name ILIKE $1", [artist]);
     return rows;
+}
+
+async function addArtist(name, description) {
+    await pool.query("INSERT INTO artist (name, description) VALUES ($1, $2)", [name, description]);
 }
 
 
@@ -35,9 +39,13 @@ async function getAllGenres() {
 }
 
 async function getGenre(genre) {
-    const { rows } = await pool.query("SELECT * FROM GENRE JOIN (SELECT title, release, artist, UNNEST(genre) AS genre FROM album) ON genre = name WHERE name ILIKE $1", [genre]);
+    const { rows } = await pool.query("SELECT * FROM genre LEFT JOIN (SELECT title, release, artist, UNNEST(genre) AS genre FROM album) ON genre = name WHERE name ILIKE $1", [genre]);
     return rows;
 }
 
+async function addGenre(name, description) {
+    await pool.query("INSERT INTO genre (name, description) VALUES ($1, $2)", [name, description]);
+}
 
-module.exports = { getAllAlbums, getAlbum, addAlbum, getAllArtists, getArtist, getAllGenres, getGenre };
+
+module.exports = { getAllAlbums, getAlbum, addAlbum, getAllArtists, getArtist, addArtist, getAllGenres, getGenre, addGenre };

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Artist</title>
+</head>
+<body>
+    <h1>New Artist</h1>
+    <%- include("partials/errors.ejs") %>
+    <form action="/artist/new" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="5" cols="50" required></textarea>
+        <button type="submit">Submit</button>
+    </form>
+    <a href="/artist">Back to Artists</a>
+</body>
+</html>

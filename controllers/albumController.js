@@ -26,11 +26,11 @@ async function albumCreateGet(req, res) {
 
 const validateAlbum = [
     body('title').trim()
-       .notEmpty().withMessage('Must have a value')
-       .matches(/^[A-Za-z0-9 .,'!&]+$/).withMessage('Title cannot have those characters'),
+       .notEmpty().withMessage('Title must have a value')
+       .matches(/^[A-Za-z0-9 .,'!&-]+$/).withMessage('Title cannot have those characters'),
     body('artist').trim()
-       .notEmpty().withMessage('Must have a value')
-       .matches(/^[A-Za-z0-9 .,'!&]+$/).withMessage('Artist cannot have those characters'),
+       .notEmpty().withMessage('Artist must have a value')
+       .matches(/^[A-Za-z0-9 .,'!&-]+$/).withMessage('Artist cannot have those characters'),
     body('release')
        .notEmpty().withMessage('Must have a date')
        .isDate(),
