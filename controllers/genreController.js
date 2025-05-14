@@ -1,4 +1,5 @@
 const db = require("../db/queries");
+const { body, validationResult } = require('express-validator');
 
 async function allGenresGet(req, res) {
     const genres = await db.getAllGenres();
@@ -13,14 +14,41 @@ async function genreGet(req, res) {
     let genre = req.params.genre;
     genre = genre.replace('_', ' ');
     const content = await db.getGenre(genre);
-    console.log(content);
-        
-    if (content.legnth !== 0) {
-        res.render("genre", { 
-            title: `Albums in ${content[0].genre}`, 
-            content: content,
-        });
-    } else res.redirect("/error");
+
+    if (content.length === 0) return res.redirect("/error");
+    
+    res.render("genre", { 
+        title: `Albums in ${content[0].name}`, 
+        content: content,
+    });
 };
 
-module.exports = { allGenresGet, genreGet }
+function genreCreateGet(req, res) {
+    res.render("genreCreate");
+};
+
+const validateGenre = [
+    body('name').trim()
+        .notEmpty().withMessage("Name must have a value")
+        .matches(/^[A-Za-z0-9 .,'!&-]+$/).withMessage('Name cannot have those characters'),
+    body('description').trim()
+        .notEmpty().withMessage("Description must have a value")
+        .matches(/^[A-Za-z0-9 .,'!&-]+$/).withMessage('Description cannot have those characters'),
+];
+
+const genreCreatePost = [
+    validateGenre,
+    async(req, res) => {
+        // Check for errors
+        let errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).render("artistCreate", { errors: errors.array() });
+        };
+        
+        const { name, description } = req.body;
+        await db.addGenre(name, description);
+        res.redirect("/genre");
+    }
+];
+
+module.exports = { allGenresGet, genreGet, genreCreateGet, genreCreatePost }

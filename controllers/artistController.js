@@ -14,16 +14,16 @@ async function artistGet(req, res) {
     let artist = req.params.artist;
     artist = artist.replace('_', ' ');
     let content = await db.getArtist(artist);
-        
-    if (artist.length === 0) return res.redirect("/error");
     
+    if (content.length === 0) return res.redirect("/error");
+
     res.render("artist", { 
         title: `${content[0].name}`, 
         content: content,
     })
 };
 
-async function artistCreateGet(req, res) {
+function artistCreateGet(req, res) {
     res.render("artistCreate");
 };
 
@@ -46,7 +46,7 @@ const artistCreatePost = [
         };
 
         const { name, description } = req.body;
-        db.addArtist(name, description);
+        await db.addArtist(name, description);
         res.redirect("/artist");
     }
 ];

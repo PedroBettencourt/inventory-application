@@ -10,13 +10,12 @@
     <% albums.map(album => { %>
         <ul>
             <li>Title: <%= album.title %></li>
-            <li>Artist: <%= album.artist %></li>
-            <li>Release Date: <%= album.release %></li>
-            <li>Genre: <%= album.genre %></li>
+            <li>Artist: <a href="/artist/<%= album.artist %>"><%= album.artist %></a></li>
             <li>Quantity: <%= album.quantity %></li>
             <li><a href="/album/<%= album.title.toLowerCase() %>">Go to Album</a></li>
         </ul>
     <% }) %>
     <a href="/album/new">Create Album</a>
+    <a href="/">Back Home</a>
 </body>
 </html>

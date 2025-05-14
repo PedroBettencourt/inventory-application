@@ -11,12 +11,18 @@
     <% if (content[0].title !== null) { %>
         <% content.map(album => { %>
             <ul>
-                <li><%= album.title %></li>
-                <li><%= album.release %></li>
-                <li><%= album.genre %></li>
-                <li><a href="/album/<%=album.title %>">Go to Album</a></li>
+                <li>Title: <a href="/album/<%=album.title %>"><%= album.title %></a></li>
+                <li>Release: <%= album.release %></li>
+                <li>Genre:
+                    <ul>
+                        <% album.genre.map(genre => { %>
+                            <li><a href="/genre/<%= genre %>"><%= genre %></a></li>
+                        <% }) %>
+                    </ul>
+                </li>
             </ul>
         <% }) %>
     <% } %>
+    <a href="/artist">Back to Artists</a>
 </body>
 </html>

@@ -7,9 +7,18 @@
 </head>
 <body>
     <h1><%= album.title %></h1>
-    <h2>Artist: <%= album.artist %></h2>
+    <h2>Artist: <a href="/artist/<%= album.artist %>"><%= album.artist %></a></h2>
     <h2>Release: <%= album.release %></h2>
-    <h2>Genre: <%= album.genre %></h2>
+    <h2>Genre:</h2>
+        <ul>
+            <% album.genre.map(genre => { %>
+                <li>
+                <a href="/genre/<%= genre %>"><%= genre %></a>
+                </li>
+            <% }) %>
+        </ul>
+    </h2>
     <h2>Quantity: <%= album.quantity %></h2>
+    <a href="/album">Back to Albums</a>
 </body>
 </html>

@@ -8,13 +8,15 @@
 <body>
     <h1><%= title %></h1>
     <h2>Description: <%= content[0].description %></h2>
-    <% content.map(album => { %>
-        <ul>
-            <li><%= album.title %></li>
-            <li><%= album.artist %></li>
-            <li><%= album.release %></li>
-            <li><a href="/album/<%=album.title %>">Go to Album</a></li>
-        </ul>
-    <% }) %>
+    <% if (content[0].title !== null) { %>
+        <% content.map(album => { %>
+            <ul>
+                <li>Title: <a href="/album/<%= album.title %>"><%= album.title %></a></li>
+                <li>Artist <a href="/artist/<%= album.artist %>"><%= album.artist %></a></li>
+                <li><%= album.release %></li>
+            </ul>
+        <% }) %>
+    <% } %>
+    <a href="/genre">Back to Genres</a>
 </body>
 </html>
