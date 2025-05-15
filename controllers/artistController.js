@@ -91,6 +91,18 @@ const artistUpdatePost = [
 // DELETE
 async function artistDeletePost(req, res) {
     const artist = req.params.artist;
+
+    //Check password
+    const password = req.body.password;
+    if (password !== process.env.PASSWORD) {
+        let content = await db.getArtist(artist);
+        return res.status(400).render("artist", 
+            { 
+                title: `${content[0].name}`, 
+                content: content,
+            });
+    }
+
     await db.deleteArtist(artist);
     res.redirect("/artist");
 }

@@ -92,6 +92,18 @@ const genreUpdatePost = [
 // DELETE
 async function genreDeletePost(req, res) {
     const genre = req.params.genre;
+    
+    // Check password
+    const password = req.body.password;
+    if (password !== process.env.PASSWORD) {
+        const content = await db.getGenre(genre);
+        return res.status(400).render("genre", 
+            { 
+                title: `${content[0].name}`, 
+                content: content,
+            });
+    }
+
     await db.deleteGenre(genre);
     res.redirect("/genre");
 };

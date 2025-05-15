@@ -133,6 +133,14 @@ const albumUpdatePost = [
 // DELETE
 async function albumDeletePost(req, res) {
     const album = req.params.album;
+    
+    // Check password
+    const password = req.body.password;
+    if (password !== process.env.PASSWORD) {
+        const content = await db.getAlbum(album);    
+        return res.status(400).render("album", { album: content });
+    }
+    
     await db.deleteAlbum(album);
     res.redirect("/album");
 }
