@@ -1,5 +1,6 @@
 const db = require('../db/queries');
 const { body, validationResult } = require('express-validator');
+require('dotenv').config();
 
 // READ
 async function allAlbumsGet(req, res) {
@@ -45,7 +46,10 @@ const validateAlbum = [
 
 // Check if request has at least 1 genre and if genres are in the database
 function checkGenres(genresDb, req) {
-    const genreList = Object.entries(req.body).slice(3, -1);
+    let genreList = Object.entries(req.body);
+    // Get only the genres (in the case of update there's an added field - password)
+    if (genreList.slice(-1)[0][0] === "password") genreList = genreList.slice(3, -2);
+    else genreList = genreList.slice(3, -1);
 
     if (genreList.length === 0) return 0;
     const genre = [];
@@ -71,7 +75,7 @@ const albumCreatePost = [
         };
 
         const genre = checkGenres(genresDb, req);
-        if (genre === false) return res.status(400).render("albumCreate", { genres: genresDb, errors: [{ msg: "Select at least 1 genre" }] });
+        if (genre === 0) return res.status(400).render("albumCreate", { genres: genresDb, errors: [{ msg: "Select at least 1 genre" }] });
         if (genre === 1) return res.status(400).render("albumCreate", { genres: genresDb, errors: [{ msg: "Genre not found" }] });
 
         
@@ -99,17 +103,23 @@ async function albumUpdateGet(req, res) {
 const albumUpdatePost = [
     validateAlbum,
     async (req, res) => {
+        const album = await db.getAlbum(req.params.album);
         const genresDb = await db.getAllGenres();
+        
+        // Check password
+        if (req.body.password !== process.env.PASSWORD) {
+            return res.status(400).render("albumUpdate", {album: album, genres: genresDb, errors: [{ msg: "Wrong password"}]});
+        }
 
         // Check for errors
         let errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).render("albumUpdate", { genres: genresDb, errors: errors.array() });
+            return res.status(400).render("albumUpdate", { album: album, genres: genresDb, errors: errors.array() });
         };
 
         const genre = checkGenres(genresDb, req);
-        if (genre === false) return res.status(400).render("albumUpdate", { genres: genresDb, errors: [{ msg: "Select at least 1 genre" }] });
-        if (genre === 1) return res.status(400).render("albumUpdate", { genres: genresDb, errors: [{ msg: "Genre not found" }] });
+        if (genre === 0) return res.status(400).render("albumUpdate", { album: album, genres: genresDb, errors: [{ msg: "Select at least 1 genre" }] });
+        if (genre === 1) return res.status(400).render("albumUpdate", { album: album, genres: genresDb, errors: [{ msg: "Genre not found" }] });
 
         
         const { title, artist, release, quantity } = req.body;

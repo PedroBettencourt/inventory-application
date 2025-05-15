@@ -1,6 +1,9 @@
 const db = require("../db/queries");
 const { body, validationResult } = require('express-validator');
+require('dotenv').config();
 
+
+// READ
 async function allGenresGet(req, res) {
     const genres = await db.getAllGenres();
 
@@ -23,6 +26,8 @@ async function genreGet(req, res) {
     });
 };
 
+
+// CREATE
 function genreCreateGet(req, res) {
     res.render("genreCreate");
 };
@@ -51,6 +56,8 @@ const genreCreatePost = [
     }
 ];
 
+
+// UPDATE
 async function genreUpdateGet(req, res) {
     const genre = await db.getGenre(req.params.genre);
 
@@ -61,10 +68,17 @@ async function genreUpdateGet(req, res) {
 const genreUpdatePost = [
     validateGenre,
     async(req, res) => {
+        const genre = await db.getGenre(req.params.genre);
+        
+        // Check password
+        if (req.body.password !== process.env.PASSWORD) {
+            return res.status(400).render("genreUpdate", { genre: genre[0], errors: [{ msg: "Wrong password" }] });
+        }
+        
         // Check for errors
         let errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).render("artistCreate", { errors: errors.array() });
+            return res.status(400).render("genreUpdate", { genre: genre[0], errors: errors.array() });
         };
         
         const { name, description } = req.body;

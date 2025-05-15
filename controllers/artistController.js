@@ -1,6 +1,6 @@
 const db = require("../db/queries");
 const { body, validationResult } = require('express-validator');
-
+require('dotenv').config();
 
 // READ
 async function allArtistsGet(req, res) {
@@ -67,10 +67,17 @@ async function artistUpdateGet(req, res) {
 const artistUpdatePost = [
     validateArtist,
     async(req, res) => {
+        const artist = await db.getArtist(req.params.artist);
+
+        // Check password
+        if (req.body.password !== process.env.PASSWORD) {
+            return res.status(400).render("artistUpdate", { artist: artist[0], errors: [{ msg: "Wrong password" }] });
+        }
+
         // Check for errors
         let errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).render("artistCreate", { errors: errors.array() });
+            return res.status(400).render("artistUpdate", { artist: artist[0], errors: errors.array() });
         };
 
         const { name, description } = req.body;
