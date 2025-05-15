@@ -53,6 +53,8 @@ const genreCreatePost = [
 
 async function genreUpdateGet(req, res) {
     const genre = await db.getGenre(req.params.genre);
+
+    if (genre.length === 0) return res.redirect("/error");
     res.render("genreUpdate", { genre: genre[0] });
 };
 

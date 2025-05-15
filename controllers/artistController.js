@@ -59,6 +59,8 @@ const artistCreatePost = [
 // UPDATE
 async function artistUpdateGet(req, res) {
     const artist = await db.getArtist(req.params.artist);
+
+    if (artist.length === 0) return res.redirect("/error");
     res.render("artistUpdate", {artist: artist[0]});
 };
 

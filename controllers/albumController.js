@@ -15,9 +15,10 @@ async function albumGet(req, res) {
     let title = req.params.album;
     title = title.replace('_', ' ');
     const album = await db.getAlbum(title);
-
-    if (album) res.render("album", { album: album });
-    else res.redirect("/error");
+    
+    if (!album) res.redirect("/error");
+    
+    res.render("album", { album: album });
 };
 
 
@@ -85,6 +86,8 @@ const albumCreatePost = [
 // UPDATE
 async function albumUpdateGet(req, res) {
     const album = await db.getAlbum(req.params.album);
+    if (!album) return res.redirect("/error");
+
     const genres = await db.getAllGenres();
 
     res.render("albumUpdate", {

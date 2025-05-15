@@ -13,6 +13,8 @@ app.get("/", (req, res) => {
 app.use("/album", albumRouter);
 app.use("/artist", artistRouter);
 app.use("/genre", genreRouter);
+app.get("/error", (req, res) => res.render("error"));
+app.get("/:a", (req, res) => res.redirect("/error"));
 
 
 const PORT = process.env.PORT || 3000;
