@@ -4,17 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Artist</title>
+    <link rel="stylesheet" href="/createUpdate.css">
 </head>
 <body>
     <h1>Update Artist</h1>
     <%- include("partials/errors.ejs") %>
     <form action="/artist/<%= artist.name %>/update" method="POST">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="<%= artist.name %>" required>
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" rows="5" cols="50" required><%= artist.description %></textarea>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="<%= artist.name %>" required>
+        </div>
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="5" cols="50" required><%= artist.description %></textarea>
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
         <button type="submit">Submit</button>
     </form>
     <a href="/artist">Back to Artists</a>

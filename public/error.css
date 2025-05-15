@@ -1,0 +1,12 @@
+:root {
+    --color-background: #FCE7C8;
+    --color-background2: #f3af67;
+    --color-text: rgb(40, 60, 40);
+}
+
+body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: sans-serif;
+    margin: 40px;
+}

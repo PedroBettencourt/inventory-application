@@ -1,0 +1,32 @@
+:root {
+    --color-background: #FCE7C8;
+    --color-background2: #f3af67;
+    --color-text: darkslategray;
+}
+
+body {
+    height: 100vh;
+    background-color: var(--color-background);
+    font-family: sans-serif;
+}
+
+.sections {
+    margin-top: 200px;
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+}
+
+a {
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: bold;
+    background-color: var(--color-background2);
+    padding: 30px;
+    border-radius: 10px;
+}
+
+a:link,
+a:visited {
+    color: var(--color-text);
+}

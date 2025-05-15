@@ -4,18 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
+    <link rel="stylesheet" href="/grid.css">
 </head>
 <body>
     <h1><%= title %></h1>
-    <% albums.map(album => { %>
-        <ul>
-            <li>Title: <%= album.title %></li>
-            <li>Artist: <a href="/artist/<%= album.artist %>"><%= album.artist %></a></li>
-            <li>Quantity: <%= album.quantity %></li>
-            <li><a href="/album/<%= album.title.toLowerCase() %>">Go to Album</a></li>
-        </ul>
-    <% }) %>
-    <a href="/album/new">Create Album</a>
-    <a href="/">Back Home</a>
-</body>
+    <div class="links">
+        <a href="/album/new">Create Album</a>
+        <a href="/">Back Home</a>
+    </div>
+    <div class="content">
+        <% albums.map(album => { %>
+            <ul>
+                <li class="main"><a href="/album/<%= album.title.toLowerCase() %>"><%= album.title %></a></li>
+                <li>Artist: <a href="/artist/<%= album.artist %>"><%= album.artist %></a></li>
+                <li>Quantity: <%= album.quantity %></li>
+            </ul>
+        <% }) %>
+    </div>
+    </body>
 </html>

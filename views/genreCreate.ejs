@@ -4,15 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Genre</title>
+    <link rel="stylesheet" href="/createUpdate.css">
 </head>
 <body>
     <h1>New Genre</h1>
     <%- include("partials/errors.ejs") %>
     <form action="/genre/new" method="POST">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" rows="5" cols="50" required></textarea>
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="5" cols="50" required></textarea>
+        </div>
         <button type="submit">Submit</button>
     </form>
     <a href="/genre">Back to Genres</a>

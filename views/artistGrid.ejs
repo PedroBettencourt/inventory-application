@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
+    <link rel="stylesheet" href="/grid.css">
 </head>
 <body>
     <h1><%= title %></h1>
-    <% content.map(item => { %>
-        <ul>
-            <li><%= item.name %></li>
-            <li><%= item.description %></li>
-            <li><a href="/artist/<%= item.name %>">Go to Artist</a></li>
-        </ul>
-    <% }) %>
-    <a href="/artist/new">Create Artist</a>
-    <a href="/">Back Home</a>
+    <div class="links">
+        <a href="/artist/new">Create Artist</a>
+        <a href="/">Back Home</a>
+    </div>
+    <div class="content">
+        <% content.map(item => { %>
+            <ul>
+                <li class="main"><a href="/artist/<%= item.name %>"><%= item.name %></a></li>
+                <li><%= item.description %></li>
+            </ul>
+        <% }) %>
+    </div>
 </body>
 </html>

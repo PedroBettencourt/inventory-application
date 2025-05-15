@@ -1,0 +1,59 @@
+:root {
+    --color-background: #FCE7C8;
+    --color-background2: #f3af67;
+    --color-text: rgb(40, 60, 40);
+    --color-links: rgb(40, 40, 90);
+}
+
+body {
+    background-color: var(--color-background);
+    font-family: sans-serif;
+    margin: 40px;
+}
+
+h1 {
+    color: var(--color-text);
+    font-size: 2rem;
+}
+
+.links {
+    margin: 40px 0;
+    display: flex;
+    gap: 20px;
+    font-size: 1.2rem;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 70px;
+}
+
+ul {
+    margin: 0;
+    background-color: var(--color-background2);
+    padding: 30px;
+    border-radius: 10px;
+    list-style-type: none;
+}
+
+li {
+    font-size: 1.2rem;
+    color: var(--color-text);
+    margin-bottom: 10px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:link,
+a:visited {
+    color: var(--color-links);
+}
+
+.main {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
