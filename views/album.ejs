@@ -20,6 +20,9 @@
     </h2>
     <h2>Quantity: <%= album.quantity %></h2>
     <a href="/album/<%= album.title %>/update">Update Album</a>
+    <form action="/album/<%= album.title %>/delete" method="POST">
+        <button type="submit" onClick="return confirm('Are you sure you want to delete this album?');">Delete Album</button>
+    </form>
     <a href="/album">Back to Albums</a>
 </body>
 </html>

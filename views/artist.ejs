@@ -24,6 +24,9 @@
         <% }) %>
     <% } %>
     <a href="/artist/<%= title %>/update">Update Artist</a>
+    <form action="/artist/<%= title %>/delete" method="POST">
+        <button type="submit" onClick="return confirm('Are you sure you want to delete this artist?');">Delete Artist</button>
+    </form>
     <a href="/artist">Back to Artists</a>
 </body>
 </html>

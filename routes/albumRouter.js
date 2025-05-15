@@ -8,5 +8,6 @@ albumRouter.post("/new", albumController.albumCreatePost);
 albumRouter.get("/:album", albumController.albumGet);
 albumRouter.get("/:album/update", albumController.albumUpdateGet);
 albumRouter.post("/:album/update", albumController.albumUpdatePost);
+albumRouter.post("/:album/delete", albumController.albumDeletePost);
 
 module.exports = albumRouter;

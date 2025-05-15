@@ -116,6 +116,12 @@ const albumUpdatePost = [
     }
 ];
 
-// DELETE
 
-module.exports = { allAlbumsGet, albumGet, albumCreateGet, albumCreatePost, albumUpdateGet, albumUpdatePost };
+// DELETE
+async function albumDeletePost(req, res) {
+    const album = req.params.album;
+    await db.deleteAlbum(album);
+    res.redirect("/album");
+}
+
+module.exports = { allAlbumsGet, albumGet, albumCreateGet, albumCreatePost, albumUpdateGet, albumUpdatePost, albumDeletePost };

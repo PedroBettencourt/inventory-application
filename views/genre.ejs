@@ -18,6 +18,9 @@
         <% }) %>
     <% } %>
     <a href="/genre/<%= title %>/update">Update Genre</a>
+    <form action="/genre/<%= title %>/delete" method="POST">
+        <button type="submit" onClick="return confirm('Are you sure you want to delete this genre?');">Delete Genre</button>
+    </form>
     <a href="/genre">Back to Genres</a>
 </body>
 </html>

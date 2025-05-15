@@ -72,4 +72,12 @@ const genreUpdatePost = [
     }
 ];
 
-module.exports = { allGenresGet, genreGet, genreCreateGet, genreCreatePost, genreUpdateGet, genreUpdatePost };
+
+// DELETE
+async function genreDeletePost(req, res) {
+    const genre = req.params.genre;
+    await db.deleteGenre(genre);
+    res.redirect("/genre");
+};
+
+module.exports = { allGenresGet, genreGet, genreCreateGet, genreCreatePost, genreUpdateGet, genreUpdatePost, genreDeletePost };

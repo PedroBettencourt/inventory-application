@@ -19,6 +19,10 @@ async function updateAlbum(title, artist, release, genre, quantity, oldTitle) {
     await pool.query("UPDATE album SET title=$1, artist=$2, release=$3, genre=$4, quantity=$5 WHERE title=$6", [title, artist, release, genre, quantity, oldTitle]);
 }
 
+async function deleteAlbum(title) {
+    await pool.query("DELETE FROM album WHERE title = $1", [title]);
+}
+
 
 // ARTISTS
 async function getAllArtists() {
@@ -37,6 +41,13 @@ async function addArtist(name, description) {
 
 async function updateArtist(name, description, oldName) {
     await pool.query("UPDATE artist SET name = $1, description = $2 WHERE name = $3", [name, description, oldName]);
+}
+
+async function deleteArtist(name) {
+    await pool.query("DELETE FROM artist WHERE name = $1", [name]);
+
+    // Delete albums from the artist
+    await pool.query("DELETE FROM album WHERE artist = $1", [name]);
 }
 
 
@@ -59,7 +70,23 @@ async function updateGenre(name, description, oldName) {
     await pool.query("UPDATE genre SET name = $1, description = $2 WHERE name = $3", [name, description, oldName]);
 }
 
+async function deleteGenre(name) {
+    await pool.query("DELETE FROM genre WHERE name = $1", [name]);
+    
+    // Delete genre from albums -> first find the albums with the genre and then update them
+    const { rows } = await pool.query(`SELECT a.title, a.genre FROM album a JOIN 
+                                        (SELECT title, genre FROM 
+                                            (SELECT title, UNNEST(genre) AS genre FROM album) 
+                                        WHERE genre = $1) b
+                                       ON a.title = b.title`, [name]);
+    
+    for (const album of rows) {
+        const genre = album.genre.filter(genre => genre !== name);
+        await pool.query("UPDATE album SET genre = $1 WHERE title = $2", [genre, album.title])
+    }
+}
 
-module.exports = { getAllAlbums, getAlbum, addAlbum, updateAlbum, 
-                getAllArtists, getArtist, addArtist, updateArtist, 
-                getAllGenres, getGenre, addGenre, updateGenre };
+
+module.exports = { getAllAlbums, getAlbum, addAlbum, updateAlbum, deleteAlbum,
+                getAllArtists, getArtist, addArtist, updateArtist, deleteArtist,
+                getAllGenres, getGenre, addGenre, updateGenre, deleteGenre };

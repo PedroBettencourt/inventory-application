@@ -78,4 +78,12 @@ const artistUpdatePost = [
     }
 ];
 
-module.exports = { allArtistsGet, artistGet, artistCreateGet, artistCreatePost, artistUpdateGet, artistUpdatePost }
+
+// DELETE
+async function artistDeletePost(req, res) {
+    const artist = req.params.artist;
+    await db.deleteArtist(artist);
+    res.redirect("/artist");
+}
+
+module.exports = { allArtistsGet, artistGet, artistCreateGet, artistCreatePost, artistUpdateGet, artistUpdatePost, artistDeletePost }
